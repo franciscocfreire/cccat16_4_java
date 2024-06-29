@@ -5,8 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class Cpf {
-    protected final Integer FACTOR_FIRST_DIGIT = 9;
-    protected final Integer FACTOR_SECOND_DIGIT = 10;
     private final String value;
 
     public Cpf(String cpf) {
@@ -14,15 +12,17 @@ public class Cpf {
         this.value = cpf;
     }
 
-    private boolean validate(String rawCpf) {
-        if (rawCpf == null) return false;
-        String cpf = removeNonDigits(rawCpf);
+    public boolean validate(String cpf) {
+        int FACTOR_FIRST_DIGIT = 9;
+        int FACTOR_SECOND_DIGIT = 10;
+        if (cpf == null) return false;
+        cpf = removeNonDigits(cpf);
         if (isValidLength(cpf)) return false;
         if (allDigitsEqual(cpf)) return false;
         int firstDigit = calculateDigit(cpf, FACTOR_FIRST_DIGIT);
         int secondDigit = calculateDigit(cpf, FACTOR_SECOND_DIGIT);
         String calculatedCheckDigits = "" + firstDigit + secondDigit;
-        String actualCheckDigits = cpf.substring(FACTOR_FIRST_DIGIT, FACTOR_SECOND_DIGIT);
+        String actualCheckDigits = cpf.substring(9, 11);
         return calculatedCheckDigits.equals(actualCheckDigits);
     }
 
@@ -32,7 +32,10 @@ public class Cpf {
     }
 
     private static boolean isValidLength(String cpf) {
-        return cpf.length() != 11;
+        if (cpf.length() != 11) {
+            return true;
+        }
+        return false;
     }
 
     private boolean allDigitsEqual(String cpf) {

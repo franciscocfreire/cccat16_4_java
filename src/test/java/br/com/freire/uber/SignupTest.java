@@ -47,9 +47,9 @@ public class SignupTest {
         assertNotNull(responseSignup.getAccountId());
 
         Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
-        assertEquals(expectedName, account.getName());
-        assertEquals(expectedEmail, account.getEmail());
-        assertEquals(expectedCpf, account.getCpf());
+        assertEquals(expectedName, account.getName().getValue());
+        assertEquals(expectedEmail, account.getEmail().getValue());
+        assertEquals(expectedCpf, account.getCpf().getValue());
     }
 
     @Test
@@ -98,9 +98,9 @@ public class SignupTest {
         assertNotNull(responseSignup.getAccountId());
 
         Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
-        assertEquals(expectedName, account.getName());
-        assertEquals(expectedEmail, account.getEmail());
-        assertEquals(expectedCpf, account.getCpf());
+        assertEquals(expectedName, account.getName().getValue());
+        assertEquals(expectedEmail, account.getEmail().getValue());
+        assertEquals(expectedCpf, account.getCpf().getValue());
     }
 
 

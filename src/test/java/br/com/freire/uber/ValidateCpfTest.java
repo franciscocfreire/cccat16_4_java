@@ -1,11 +1,12 @@
 package br.com.freire.uber;
 
+import br.com.freire.uber.domain.Cpf;
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidateCpfTest {
 
@@ -16,7 +17,8 @@ public class ValidateCpfTest {
             "87748248800"
     })
     void deveTestarCpfValido(String cpf) {
-        assertTrue(ValidateCpf.validate(cpf));
+        Cpf cpfValid = new Cpf(cpf);
+        assertNotNull(cpfValid);
     }
 
     @ParameterizedTest
@@ -27,6 +29,6 @@ public class ValidateCpfTest {
             "1234566789123456789"
     })
     void deveTestarCpfInvalido(String cpf) {
-        assertFalse(ValidateCpf.validate(cpf));
+        assertThrows(ValidationError.class, () -> new Cpf(cpf));
     }
 }

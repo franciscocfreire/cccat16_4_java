@@ -29,8 +29,8 @@ public class GetRide {
                 ride.getToLat(),
                 ride.getToLong(),
                 ride.getStatus(),
-                passenger.getName(),
-                passenger.getEmail()
+                passenger.getName().getValue(),
+                passenger.getEmail().getValue()
                 );
     }
 
