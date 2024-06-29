@@ -1,6 +1,5 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.domain.ValidateCpf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
