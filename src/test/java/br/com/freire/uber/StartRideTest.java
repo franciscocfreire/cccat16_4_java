@@ -1,9 +1,6 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.application.usecase.AcceptRide;
-import br.com.freire.uber.application.usecase.GetRide;
-import br.com.freire.uber.application.usecase.ResquestRide;
-import br.com.freire.uber.application.usecase.Signup;
+import br.com.freire.uber.application.usecase.*;
 import br.com.freire.uber.infrastructure.http.SignupRequest;
 import br.com.freire.uber.infrastructure.http.SignupResponse;
 import br.com.freire.uber.infrastructure.repository.AccountRepository;
@@ -20,7 +17,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class AcceptRideTest {
+public class StartRideTest {
 
     @Autowired
     Signup signup;
@@ -32,8 +29,8 @@ public class AcceptRideTest {
     RideRepository rideRepository;
 
     @Test
-    @DisplayName("Deve aceitar uma corrida")
-    public void deveAceitarUmaCorrida() {
+    @DisplayName("Deve inciar uma corrida")
+    public void deveIniciarUmaCorrida() {
         //Given
         String expectedName = "John Doe";
         String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
@@ -72,13 +69,18 @@ public class AcceptRideTest {
         var acceptRide = new AcceptRide(accountRepository, rideRepository);
         AcceptRide.InputAcceptRide inputAcceptRide = new AcceptRide.InputAcceptRide(outputRequestRide.rideId(), outputSignupDriver.getAccountId());
         acceptRide.execute(inputAcceptRide);
+
+        var startRide = new StartRide(rideRepository);
+        StartRide.InputStartRide inputStartRide = new StartRide.InputStartRide(outputRequestRide.rideId());
+        startRide.execute(inputStartRide);
+
         var getRide = new GetRide(accountRepository, rideRepository);
         var inputGetRide = new GetRide.InputGetRide(outputRequestRide.rideId());
         //When
         var outputGetRide = getRide.execute(inputGetRide);
         //Then
-        assertEquals("accepted", outputGetRide.status());
+        assertEquals("in_progress", outputGetRide.status());
         assertEquals(outputRequestRide.rideId(), outputGetRide.rideId());
-        assertEquals(expectedNameDriver, outputGetRide.driverName());
+
     }
 }

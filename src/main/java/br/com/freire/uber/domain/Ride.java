@@ -42,6 +42,12 @@ public class Ride {
         this.status = "accepted";
 
     }
+
+    public void start(){
+        if(!this.status.equals("accepted")) throw new ValidationError("Invalid status", -11);
+        this.status = "in_progress";
+    }
+
     public BigDecimal getFromLatitude(){
         return getSegment().getFrom().getLatitude();
     }
