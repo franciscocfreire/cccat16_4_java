@@ -24,10 +24,10 @@ public class GetRide {
         return new OutputGetRide(
                 ride.getRideId().toString(),
                 ride.getPassengerId().toString(),
-                ride.getFromLat(),
-                ride.getFromLong(),
-                ride.getToLat(),
-                ride.getToLong(),
+                ride.getFromLatitude(),
+                ride.getFromLongitude(),
+                ride.getToLatitude(),
+                ride.getToLongitude(),
                 ride.getStatus(),
                 passenger.getName(),
                 passenger.getEmail()

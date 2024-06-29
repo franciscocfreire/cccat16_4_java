@@ -24,7 +24,7 @@ public class RideRepositoryDatabase implements RideRepository {
     @Override
     public void saveRide(Ride ride) {
         jdbcTemplate.update("INSERT INTO cccat16.ride (ride_id, passenger_id, from_lat, from_long, to_lat, to_long, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                ride.getRideId(), ride.getPassengerId(), ride.getFromLat(), ride.getFromLong(), ride.getToLat(), ride.getToLong(), ride.getStatus(), ride.getDate());
+                ride.getRideId(), ride.getPassengerId(), ride.getFromLatitude(), ride.getFromLongitude(), ride.getToLatitude(), ride.getToLongitude(), ride.getStatus(), ride.getDate());
     }
 
     @Override
