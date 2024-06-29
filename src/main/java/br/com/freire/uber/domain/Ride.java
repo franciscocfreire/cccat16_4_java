@@ -1,5 +1,6 @@
 package br.com.freire.uber.domain;
 
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -10,13 +11,15 @@ import java.util.UUID;
 public class Ride {
     private final UUID rideId;
     private final UUID passengerId;
+    private UUID driverId;
     private final Segment segment;
-    private final String status;
+    private String status;
     private final LocalDateTime date;
 
-    private Ride(UUID rideId, UUID passengerId, Segment segment, String status, LocalDateTime date){
+    private Ride(UUID rideId, UUID passengerId, UUID driverId, Segment segment, String status, LocalDateTime date){
         this.rideId = rideId;
         this.passengerId = passengerId;
+        this.driverId = driverId;
         this.segment = segment;
         this.status = status;
         this.date = date;
@@ -26,13 +29,19 @@ public class Ride {
         UUID rideId =UUID.randomUUID();
         String status = "requested";
         LocalDateTime date = LocalDateTime.now();
-        return new Ride(rideId, passengerId, new Segment(new Coord(fromLat, fromLong), new Coord(toLat, toLong)), status, date );
+        return new Ride(rideId, passengerId,null, new Segment(new Coord(fromLat, fromLong), new Coord(toLat, toLong)), status, date );
     }
 
-    public static Ride restore(UUID rideId, UUID passengerId, BigDecimal fromLat, BigDecimal fromLong, BigDecimal toLat, BigDecimal toLong, String status, LocalDateTime date){
-        return new Ride(rideId, passengerId, new Segment(new Coord(fromLat, fromLong), new Coord(toLat, toLong)), status, date );
+    public static Ride restore(UUID rideId, UUID passengerId, UUID driverId, BigDecimal fromLat, BigDecimal fromLong, BigDecimal toLat, BigDecimal toLong, String status, LocalDateTime date){
+        return new Ride(rideId, passengerId, driverId, new Segment(new Coord(fromLat, fromLong), new Coord(toLat, toLong)), status, date );
     }
 
+    public void accept(String driverId){
+        if(!this.status.equals("requested")) throw new ValidationError("Invalid status", -11);
+        this.driverId = UUID.fromString(driverId);
+        this.status = "accepted";
+
+    }
     public BigDecimal getFromLatitude(){
         return getSegment().getFrom().getLatitude();
     }

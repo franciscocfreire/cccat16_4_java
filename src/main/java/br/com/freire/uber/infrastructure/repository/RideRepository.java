@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface RideRepository {
     void saveRide(Ride ride);
-
     Optional<Ride> getRideById(String rideId);
     boolean hasActiveRideByPassengerId(UUID passengerId);
+    void updateRide(Ride ride);
 }

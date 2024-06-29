@@ -51,6 +51,12 @@ public class RideRepositoryDatabase implements RideRepository {
 
     }
 
+    @Override
+    public void updateRide(Ride ride) {
+        jdbcTemplate.update("UPDATE cccat16.ride SET status = ?, driver_id = ? WHERE ride_id = ?",
+                ride.getStatus(), ride.getDriverId(), ride.getRideId());
+    }
+
     private Ride convertMapToRide(Map<String, Object> result) {
         if (result == null) return null;
         Timestamp timestamp = (Timestamp) result.get("date");
@@ -60,14 +66,15 @@ public class RideRepositoryDatabase implements RideRepository {
         }
 
         return Ride.restore(
-        (UUID) result.get("ride_id"),
-        (UUID) result.get("passenger_id"),
-        ((BigDecimal) result.get("from_lat")),
-        ((BigDecimal) result.get("from_long")),
-        ((BigDecimal) result.get("to_lat")),
-        ((BigDecimal) result.get("to_long")),
-        (String) result.get("status"),
-        date
+                (UUID) result.get("ride_id"),
+                (UUID) result.get("passenger_id"),
+                (UUID) result.get("driver_id"),
+                ((BigDecimal) result.get("from_lat")),
+                ((BigDecimal) result.get("from_long")),
+                ((BigDecimal) result.get("to_lat")),
+                ((BigDecimal) result.get("to_long")),
+                (String) result.get("status"),
+                date
         );
 
 
