@@ -32,10 +32,7 @@ public class Cpf {
     }
 
     private static boolean isValidLength(String cpf) {
-        if (cpf.length() != 11) {
-            return true;
-        }
-        return false;
+        return cpf.length() != 11;
     }
 
     private boolean allDigitsEqual(String cpf) {

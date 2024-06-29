@@ -30,7 +30,7 @@ public class AccountRepositoryMemory implements AccountRepository {
     @Override
     public UUID saveAccount(Account account) {
         this.mapAccountByAccountId.put(account.getAccountId(), account);
-        this.mapAccountByAccountEmail.put(account.getEmail().getValue(), account);
+        this.mapAccountByAccountEmail.put(account.getEmail(), account);
         return account.getAccountId();
     }
 }

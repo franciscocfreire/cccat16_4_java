@@ -17,10 +17,10 @@ public class GetAccount {
     public Account getAccount(UUID accountId) {
         return accountRepository.getAccountById(accountId).map(result -> Account.restore(
                 result.getAccountId(),
-                result.getName().getValue(),
-                result.getEmail().getValue(),
-                result.getCpf().getValue(),
-                result.getCarPlate().getValue(),
+                result.getName(),
+                result.getEmail(),
+                result.getCpf(),
+                result.getCarPlate(),
                 result.isPassenger(),
                 result.isDriver()))
                 .orElse(null);
