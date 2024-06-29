@@ -14,15 +14,29 @@ public class GetAccount {
         this.accountRepository = accountRepository;
     }
 
-    public Account getAccount(UUID accountId) {
-        return accountRepository.getAccountById(accountId).map(result -> Account.restore(
-                result.getAccountId(),
-                result.getName(),
-                result.getEmail(),
-                result.getCpf(),
-                result.getCarPlate(),
-                result.isPassenger(),
-                result.isDriver()))
+    public OutputGetAccount getAccount(UUID accountId) {
+        Account account = accountRepository.getAccountById(accountId).map(result -> Account.restore(
+                        UUID.fromString(result.getAccountId()),
+                        result.getName(),
+                        result.getEmail(),
+                        result.getCpf(),
+                        result.getCarPlate(),
+                        result.isPassenger(),
+                        result.isDriver()))
                 .orElse(null);
+        if (account != null) {
+            return new OutputGetAccount(account.getAccountId(), account.getName(), account.getEmail(), account.getCpf(), account.getCarPlate(), account.isPassenger(), account.isDriver());
+        }
+        return null;
+    }
+
+    public record OutputGetAccount(
+            String accountId,
+            String name,
+            String email,
+            String cpf,
+            String carPlate,
+            boolean isPassenger,
+            boolean isDriver) {
     }
 }

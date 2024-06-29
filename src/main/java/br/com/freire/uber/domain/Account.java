@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.UUID;
 
 public class Account {
-    @Getter
+
     private final UUID accountId;
     private final Name name;
     private final Email email;
@@ -32,6 +32,10 @@ public class Account {
 
     public static Account restore(UUID accountId, String name, String email, String cpf, String carPlate, boolean isPassenger, boolean isDriver) {
         return new Account(accountId, new Name(name), new Email(email), new Cpf(cpf), new CarPlate(carPlate), isPassenger, isDriver);
+    }
+
+    public String getAccountId(){
+        return accountId.toString();
     }
 
     public String getName() {

@@ -1,8 +1,8 @@
 package br.com.freire.uber.infrastructure.http;
 
-import br.com.freire.uber.domain.Account;
 import br.com.freire.uber.application.usecase.GetAccount;
 import br.com.freire.uber.application.usecase.Signup;
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +35,14 @@ public class AccountController {
 
     @GetMapping("/accounts/{accountId}")
     public ResponseEntity<?> getAccount(@PathVariable String accountId) {
-        Account account = getAccount.getAccount(UUID.fromString(accountId));
-        if (account != null) return ResponseEntity.ok(account);
-        return ResponseEntity.notFound().build();
+        try {
+            GetAccount.OutputGetAccount account = getAccount.getAccount(UUID.fromString(accountId));
+            return ResponseEntity.ok(account);
+        } catch (ValidationError validationError) {
+            if (validationError.getErrorCode() == -10) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.internalServerError().build();
+        }
     }
-
-
 }

@@ -1,6 +1,5 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.domain.Account;
 import br.com.freire.uber.application.usecase.GetAccount;
 import br.com.freire.uber.application.usecase.Signup;
 import br.com.freire.uber.domain.exceptions.ValidationError;
@@ -46,10 +45,10 @@ public class SignupTest {
         assertNotNull(responseSignup);
         assertNotNull(responseSignup.getAccountId());
 
-        Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
-        assertEquals(expectedName, account.getName());
-        assertEquals(expectedEmail, account.getEmail());
-        assertEquals(expectedCpf, account.getCpf());
+        GetAccount.OutputGetAccount account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
+        assertEquals(expectedName, account.name());
+        assertEquals(expectedEmail, account.email());
+        assertEquals(expectedCpf, account.cpf());
     }
 
     @Test
@@ -97,11 +96,9 @@ public class SignupTest {
         assertNotNull(responseSignup);
         assertNotNull(responseSignup.getAccountId());
 
-        Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
-        assertEquals(expectedName, account.getName());
-        assertEquals(expectedEmail, account.getEmail());
-        assertEquals(expectedCpf, account.getCpf());
+        GetAccount.OutputGetAccount account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
+        assertEquals(expectedName, account.name());
+        assertEquals(expectedEmail, account.email());
+        assertEquals(expectedCpf, account.cpf());
     }
-
-
 }

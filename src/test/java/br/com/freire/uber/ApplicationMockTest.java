@@ -38,7 +38,7 @@ public class ApplicationMockTest {
         String expectedName = "John Doe";
         String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
         String expectedCpf = "87748248800";
-        String expectedCarPlate = "XYZ-1234";
+        String expectedCarPlate = "XYZ1234";
         boolean expectedPassenger = true;
         boolean expectedDriver = false;
 
@@ -63,9 +63,9 @@ public class ApplicationMockTest {
 
         GetAccount getAccount = new GetAccount(accountRepository);
 
-        Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
-        assertEquals(expectedName, account.getName());
-        assertEquals(expectedEmail, account.getEmail());
-        assertEquals(expectedCpf, account.getCpf());
+        GetAccount.OutputGetAccount account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
+        assertEquals(expectedName, account.name());
+        assertEquals(expectedEmail, account.email());
+        assertEquals(expectedCpf, account.cpf());
     }
 }

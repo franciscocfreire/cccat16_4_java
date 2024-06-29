@@ -47,7 +47,7 @@ public class AccountRepositoryDatabase implements AccountRepository {
         jdbcTemplate.update("INSERT INTO cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 account.getAccountId(), account.getName(), account.getEmail(), account.getCpf(), account.getCarPlate(), account.isPassenger(), account.isDriver());
 
-        return account.getAccountId();
+        return UUID.fromString(account.getAccountId());
     }
 
     private Account convertMapToAccount(Map<String, Object> result) {

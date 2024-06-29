@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class AccountRepositoryMemory implements AccountRepository {
 
-    Map<UUID, Account> mapAccountByAccountId;
+    Map<String, Account> mapAccountByAccountId;
     Map<String, Account> mapAccountByAccountEmail;
 
     public AccountRepositoryMemory() {
@@ -24,13 +24,13 @@ public class AccountRepositoryMemory implements AccountRepository {
 
     @Override
     public Optional<Account> getAccountById(UUID accountId) {
-        return Optional.ofNullable(this.mapAccountByAccountId.get(accountId));
+        return Optional.ofNullable(this.mapAccountByAccountId.get(accountId.toString()));
     }
 
     @Override
     public UUID saveAccount(Account account) {
         this.mapAccountByAccountId.put(account.getAccountId(), account);
         this.mapAccountByAccountEmail.put(account.getEmail(), account);
-        return account.getAccountId();
+        return UUID.fromString(account.getAccountId());
     }
 }

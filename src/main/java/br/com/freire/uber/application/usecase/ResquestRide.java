@@ -29,7 +29,7 @@ public class ResquestRide {
         if (!account.isPassenger()) {
             throw new ValidationError("Account is not from passenger", -6);
         }
-        var hasActiveRide = rideRepository.hasActiveRideByPassengerId(account.getAccountId());
+        var hasActiveRide = rideRepository.hasActiveRideByPassengerId(UUID.fromString(account.getAccountId()));
         if (hasActiveRide) throw new ValidationError("Passenger has an active ride", -7);
         Ride ride = Ride.create(
                 UUID.fromString(input.passengerId),
